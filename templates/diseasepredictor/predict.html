@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="hero-wrap hero-bread" style="background-image: url(https://ld-wt73.template-help.com/tf/clinia/images/backgrounds/background-03-1920x537.jpg);">
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-center justify-content-center">
+        <div class="col-md-9 ftco-animate text-center">
+            <p class="breadcrumbs"><span class="mr-2"><a href="/">Home</a></span> <span>Corona Predictor</span></p>
+          <h1 class="mb-0 bread">Corona Predictor</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container ">
+  <div class="row" style="margin-top:40px">
+    <!-- Free Tier -->
+    <div class="col-lg-6">
+      <div class="card mb-5 mb-lg-0">
+        <div class="card-body">
+          <h5 class="card-title text-muted text-uppercase text-center" style="color:#0b0b14!important;">
+Check if you need a covid vaccine?          </h5>
+
+          <hr />
+          <p class="card-p" style="color: #6c757d!important;">
+You can here check whether you currently require a vaccine or not      </p>
+          <a
+            href="{% url 'diseasepredictor:covid1' %}"
+            class="btn btn-block btn-danger text-uppercase"
+            >Check your Probability</a
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-muted text-uppercase text-center" style="color:#0b0b14!important;" >
+            Check if your vaccine is working?
+          </h5>
+
+          <hr />
+          <p class="card-p" style="color: #6c757d!important;">
+Here you can check whether your vaccine working status.          </p>
+          <a
+            href="http://127.0.0.1:8080/polls/"
+            class="btn btn-block btn-primary text-uppercase"
+            >Check your Probability</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock content %}

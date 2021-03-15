@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="hero-wrap hero-bread" style="background-image: url(https://ld-wt73.template-help.com/tf/clinia/images/backgrounds/background-03-1920x537.jpg);">
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-center justify-content-center">
+        <div class="col-md-9 ftco-animate text-center">
+            <p class="breadcrumbs"><span class="mr-2"><a href="/"></a></span> <span></span></p>
+          <h1 class="mb-0 bread">Check here if you need a vaccine</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+   <br>
+   <br>
+  <div class="container" style="background-color: rgba(255, 255, 255, .4);">
+    {% if context %}
+    <h2 class="text-center" >RESULTS</h2>
+          <hr />
+          
+          <h2 class="text-center">
+          {% comment %} <div class="display-4 my-2 text-center"> {% endcomment %}
+           {{ context }}
+          {% comment %} </div> {% endcomment %}
+          </h2>
+          {% endif %}
+
+          {% if error %}
+          <div style="background-color: rgb(248, 103, 93);
+          width: 80%;
+          padding: 20px;
+          font-weight: 600;
+          font-size: 20px;
+          border-radius: 10px;
+          margin: auto;
+          color: black;">
+              * {{error}}
+          </div>
+          {% endif %}
+          </div>
+          <br>
+  <div class="container" style="width: 50%;  margin-top: 40px; padding: 10px;" >
+    <form  method="POST" class="appointment-form"  action="{% url 'diseasepredictor:covid1' %}">
+      {% csrf_token %}
+      <div class="form-group-1">      
+        <div class="form-group">
+          <input
+            type="text"
+            step=".2"
+            class="form-control"
+            id="temp"          
+            name="temp"
+            min="96"
+            placeholder="Do you have any chronic diseases?"
+            
+          />
+        </div>
+        
+        <div class="form-group">
+          
+          <input
+            type="number"
+            class="form-control"
+            id="age"          
+            name="age"
+            placeholder="Your Gender"
+          />
+        </div>
+        <div class="form-group">
+          
+          <input
+            type="text"
+            class="form-control"
+            id="bp"          
+            name="bp"
+            placeholder="Do you have Diabetes?"
+          />
+        </div>
+        <div class="form-group">
+          
+          <input
+            type="text"
+            
+            class="form-control"
+            id="nose"            
+            name="nose"
+            placeholder="Do you have neuro problems?"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            id="breath"
+            name="breath"
+            placeholder="Do you have hypertension?"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            id="ht"
+            name="ht"
+            placeholder="Do you have cancer?"
+          />
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="a"
+              name="a"
+              placeholder="Do you have orthopeadeic diseases?"
+            />
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                id="b"
+                name="b"
+                placeholder="Do you have respiratory problems?"
+              />
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="c"
+                  name="c"
+                  placeholder="Do you have heart problems?"
+                />
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="d"
+                    name="d"
+                    placeholder="Do you have Kidney problems?"
+                  />
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="e"
+                      name="e"
+                      placeholder="Do you have blood problems? "
+                    /><div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="f"
+                        name="f"
+                        placeholder="Do you have prostrate problems?"
+                      />
+                      <input
+                      type="text"
+                      class="form-control"
+                      id="g"
+                      name="g"
+                      placeholder="Do you have thyroid?"
+                    />
+      </div>
+
+    <input type="submit" class="btn btn-success" name="submit" id="submit" class="submit" value="Get Results"/>
+      </div>
+    </form>
+  </div>
+{% endblock content %}

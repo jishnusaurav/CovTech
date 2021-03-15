@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang=en>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+        <title>COVID-19 Game</title>
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="stylesheet" href="/media/jishnusaurav/Data/Downloads_B/medbay (3)/medbay/MediCenter Microservice/templates/style.css"/>
+    </head>
+
+    <body>
+
+<style>body {
+        background-image: url("https://ld-wt73.template-help.com/tf/clinia/images/backgrounds/background-03-1920x537.jpg");
+        background-color: #cccccc;
+        background-color: #e6b122;
+	color: #ffffff;
+	flex-direction: column;
+	font-family: 'Press Start 2P';
+	height: 100vh;
+	margin: 0;
+	overflow: hidden;
+	text-align: center;
+	touch-action: none;
+	-webkit-user-select: none; /* Safari */
+	-ms-user-select: none; /* IE 10+ and Edge */
+	user-select: none; /* Standard syntax */
+      }
+      @import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
+
+* {
+	box-sizing: border-box;
+}
+
+
+a {
+	color: #ffffff;
+}
+
+h1 {
+	line-height: 1.4;
+}
+
+.screen {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	transition: margin 0.75s linear;
+	height: 100vh;
+	width: 100vw;
+}
+
+.screen.up {
+	margin-top: -100vh;
+}
+
+.btn {
+	border: 0;
+	background-color: #ffffff;
+	color: #e6b122;
+	cursor: pointer;
+	font-family: 'Press Start 2P';
+	padding: 15px 20px;
+}
+
+.btn:hover {
+	opacity: 0.9;
+}
+
+.btn:active {
+	opacity: 0.7;
+}
+
+.strain_list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	list-style-type: none;
+	padding: 0;
+}
+
+.strain_list li {
+	margin: 10px;
+}
+
+.choose_strain_btn {
+	background: transparent;
+	border: 2px solid #ffffff;
+	color: #ffffff;
+	cursor: pointer;
+	font-family: 'Press Start 2P';
+	width: 150px;
+	height: 150px;
+}
+
+.choose_strain_btn:hover {
+	background-color: #ffffff;
+	color: #e6b122;
+}
+
+.choose_strain_btn:active {
+	background-color: rgba(255, 255, 255, 0.7);
+}
+
+.choose_strain_btn img {
+	object-fit: contain;
+	width: 100px;
+	height: 100px;
+}
+
+.game_container {
+	position: relative;
+}
+
+#time, #score {
+	top: 20px;
+	position: absolute;
+}
+
+@media screen and (max-width: 480px) {
+	#time, #score {
+		font-size: 12px;
+	}
+}
+
+#time {
+	left: 20px;
+}
+
+#score {
+	right: 20px;
+}
+
+#final_message {
+	line-height: 1.6;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transition: transform 0.4s ease-in;
+	transform: translate(-50%, -150%);
+	opacity: 0;
+	text-align: center;
+	width: 100%;
+}
+
+#final_message.visible {
+	transform: translate(-50%, 100%);
+	opacity: 1;
+}
+
+.virus {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	transform: translate(-50%, -50%) scale(1);
+	cursor: pointer;
+	width: 100px;
+	height: 100px;
+	transition: transform 0.3s ease-out;
+}
+
+.virus.catched {
+	transform: translate(-50%, -50%) scale(0);
+}
+
+.virus img {
+	object-fit: contain;
+	width: 100px;
+	height: 100px;
+}</style>
+        <div class="screen">
+            <h1>The Corona Virus Game</h1>
+            <button id="start_btn" class="btn">Play Game</button>
+            <div>
+                
+            </div>
+        </div>
+        <div class="screen">
+            <h1>What is your "favorite" strain?</h1>
+            <ul class="strain_list">
+                <li>
+                    <button class="choose_strain_btn">
+                        <p>S-type</p>
+                        <img src="http://pngimg.com/uploads/coronavirus/coronavirus_PNG17.png" alt="s-type-coronavirus"/>
+                    </button>
+                </li>
+                <li>
+                    <button class="choose_strain_btn">
+                        <p>L-type</p>
+                        <img src="http://pngimg.com/uploads/coronavirus/coronavirus_PNG46.png" alt="l-type-coronavirus"/>
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="screen game_container">
+            <h3 id="time">Time: 00:00</h3>
+            <h3 id="score">Score: 0</h3>
+            <h4 id="final_message">
+                Are you infected yet? <br />
+                If not, keep it that way and <br />
+                stay home, self-isolating... <br />
+                <br />
+                You are playing: <br />
+                The Corona Virus Game! <br />
+            </h4>        
+        </div>
+        <audio id="cardib">
+            <source src="/media/jishnusaurav/Data/Downloads_B/medbay (3)/medbay/MediCenter Microservice/templates/Cardi B Coronavirus.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="coronatime">
+            <source src="/media/jishnusaurav/Data/Downloads_B/medbay (3)/medbay/MediCenter Microservice/templates/It's Corona Time.mp3" type="audio/mpeg">
+        </audio>
+        
+        <script>const start_btn = document.getElementById('start_btn');
+            const screens = document.querySelectorAll('.screen');
+            const choose_strain_btns = document.querySelectorAll('.choose_strain_btn');
+            const game_container = document.querySelector('.game_container');
+            const timeEl = document.getElementById('time');
+            const scoreEl = document.getElementById('score');
+            const final_message = document.getElementById('final_message');
+            const cardib = document.getElementById("cardib");
+            const coronatime = document.getElementById("coronatime");
+            let seconds = 0;
+            let score = 0;
+            let selected_virus = {};
+            
+            start_btn.addEventListener('click', () => {
+                screens[0].classList.add('up');
+                cardib.play();
+            });
+            
+            choose_strain_btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const img = btn.querySelector('img');
+                    const src = img.getAttribute('src');
+                    const alt = img.getAttribute('alt');
+                    selected_virus = {src, alt};
+                    screens[1].classList.add('up');
+                    setTimeout(createVirus, 1000);
+                    cardib.play();
+                    startGame();
+                });
+            });
+            
+            function increaseTime() {
+                let m = Math.floor(seconds / 60);
+                let s = seconds % 60;
+                m = m < 10 ? `0${m}` : m;
+                s = s < 10 ? `0${s}` : s;
+                timeEl.innerHTML = `Time: ${m}:${s}`;
+                seconds++;
+            }
+            
+            function addViruses() {
+                setTimeout(createVirus, 1000);
+                setTimeout(createVirus, 1500);
+            }
+            
+            function createVirus() {
+                const virus = document.createElement('div');
+                const { x, y } = getRandomLocation();
+                virus.classList.add('virus');
+                virus.style.left = `${x}px`;
+                virus.style.top = `${y}px`;
+                virus.innerHTML = `<img src="${selected_virus.src}" alt="${selected_virus.alt}" 
+                        style="transform: rotate(${Math.random() * 360}deg);"/>`;
+                virus.addEventListener('click', catchVirus);
+                game_container.appendChild(virus);
+            }
+            
+            function catchVirus() {
+                increaseScore();
+                this.classList.add('catched');
+                setTimeout(() => {
+                    this.remove();
+                }, 2000);
+                addViruses();
+            }
+            
+            function increaseScore() {
+                score++;
+                if (score >= 20) {
+                    final_message.classList.add('visible');
+                }
+                scoreEl.innerHTML = `Score: ${score}`;
+            }
+            
+            function startGame() {
+                setTimeout(function() {
+                    coronatime.play();
+                }, 1500);
+                setInterval(increaseTime, 1000);
+            }
+            
+            function getRandomLocation() {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                const x = Math.random() * (width - 200) + 100;
+                const y = Math.random() * (height - 200) + 100;
+                return {x, y};
+            }</script>
+    </body>
+</html>
